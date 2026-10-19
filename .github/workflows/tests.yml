@@ -1,0 +1,29 @@
+name: tests
+
+# Runs on every push and pull request:
+# 1. the unit tests and the data validation tests on every log in data/
+# 2. the report on every log, with charts saved as a downloadable artifact
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run tests
+        run: pytest -v
+      - name: Generate reports
+        run: |
+          shopt -s globstar
+          python -m battery_analysis.report data/**/*.csv
+        shell: bash
+      - name: Upload charts
+        uses: actions/upload-artifact@v4
+        with:
+          name: battery-reports
+          path: reports/

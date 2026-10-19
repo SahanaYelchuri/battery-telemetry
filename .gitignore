@@ -1,0 +1,7 @@
+__pycache__/
+.pytest_cache/
+reports/
+# raw Windows battery/sleep reports contain the computer name; keep them out
+*.html
+# ...but publish the visual explainer for GitHub Pages
+!docs/index.html

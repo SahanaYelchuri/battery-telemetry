@@ -1,0 +1,4 @@
+pandas
+matplotlib
+pytest
+psutil; sys_platform == "win32"
